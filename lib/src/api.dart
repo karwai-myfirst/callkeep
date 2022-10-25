@@ -93,6 +93,7 @@ class FlutterCallkeep extends EventManager {
           'displayIncomingCall', <String, dynamic>{
         'uuid': uuid,
         'handle': handle,
+        'hasVideo': hasVideo,
         'localizedCallerName': localizedCallerName
       });
       return;
