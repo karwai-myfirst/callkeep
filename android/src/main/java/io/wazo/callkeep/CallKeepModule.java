@@ -36,7 +36,6 @@ import android.telecom.Connection;
 import android.telecom.PhoneAccount;
 import android.telecom.PhoneAccountHandle;
 import android.telecom.TelecomManager;
-import android.telecom.VideoProfile;
 import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.WindowManager;
@@ -112,7 +111,7 @@ public class CallKeepModule {
             }
             break;
             case "displayIncomingCall": {
-                displayIncomingCall((String) call.argument("uuid"), (String) call.argument("handle"), (boolean) call.argument("hasVideo"), (String) call.argument("localizedCallerName"));
+                displayIncomingCall((String) call.argument("uuid"), (String) call.argument("handle"), (String) call.argument("localizedCallerName"));
                 result.success(null);
             }
             break;
@@ -263,7 +262,7 @@ public class CallKeepModule {
     }
 
 
-    public void displayIncomingCall(String uuid, String number, boolean hasVideo, String callerName) {
+    public void displayIncomingCall(String uuid, String number, String callerName) {
         if (!isConnectionServiceAvailable() || !hasPhoneAccount()) {
             return;
         }
@@ -276,11 +275,7 @@ public class CallKeepModule {
         extras.putParcelable(TelecomManager.EXTRA_INCOMING_CALL_ADDRESS, uri);
         extras.putString(EXTRA_CALLER_NAME, callerName);
         extras.putString(EXTRA_CALL_UUID, uuid);
-        if (hasVideo) {
-            extras.putInt(TelecomManager.EXTRA_INCOMING_VIDEO_STATE, VideoProfile.STATE_BIDIRECTIONAL);
-        }else{
-            extras.putInt(TelecomManager.EXTRA_INCOMING_VIDEO_STATE, VideoProfile.STATE_AUDIO_ONLY);
-        }
+
         telecomManager.addNewIncomingCall(handle, extras);
     }
 
