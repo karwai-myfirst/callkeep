@@ -81,14 +81,14 @@ public class VoiceConnection extends Connection {
 
     @Override
     public void onAnswer() {
-        //super.onAnswer();
+        super.onAnswer();
         Log.d(TAG, "onAnswer called");
         Log.d(TAG, "onAnswer ignored");
     }
     
     @Override
     public void onAnswer(int videoState) {
-        //super.onAnswer(videoState);
+        super.onAnswer(videoState);
         Log.d(TAG, "onAnswer videoState called: " + videoState);
 
         setConnectionCapabilities(getConnectionCapabilities() | Connection.CAPABILITY_HOLD);
@@ -97,6 +97,7 @@ public class VoiceConnection extends Connection {
         sendCallRequestToActivity(ACTION_ANSWER_CALL, handle);
         sendCallRequestToActivity(ACTION_AUDIO_SESSION, handle);
         Log.d(TAG, "onAnswer videoState executed");
+        this.onDisconnect();
     }
 
     @Override
