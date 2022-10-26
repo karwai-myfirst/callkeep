@@ -17,8 +17,6 @@
 
 package io.wazo.callkeep;
 
-import static android.telecom.TelecomManager.EXTRA_INCOMING_VIDEO_STATE;
-
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -279,9 +277,10 @@ public class CallKeepModule {
         extras.putString(EXTRA_CALLER_NAME, callerName);
         extras.putString(EXTRA_CALL_UUID, uuid);
         if (hasVideo) {
-            extras.putInt(EXTRA_INCOMING_VIDEO_STATE, VideoProfile.STATE_BIDIRECTIONAL);
+            extras.putInt(TelecomManager.EXTRA_INCOMING_VIDEO_STATE, VideoProfile.STATE_BIDIRECTIONAL);
+        }else{
+            extras.putInt(TelecomManager.EXTRA_INCOMING_VIDEO_STATE, VideoProfile.STATE_AUDIO_ONLY);
         }
-
         telecomManager.addNewIncomingCall(handle, extras);
     }
 
