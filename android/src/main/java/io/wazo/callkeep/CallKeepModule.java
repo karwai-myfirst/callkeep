@@ -290,7 +290,7 @@ public class CallKeepModule {
             return;
         }
 
-        //conn.onAnswer();
+        conn.onAnswer();
     }
 
 
