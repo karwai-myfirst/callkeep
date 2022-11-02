@@ -40,6 +40,7 @@ import static io.wazo.callkeep.Constants.*;
 @TargetApi(Build.VERSION_CODES.M)
 public class VoiceConnection extends Connection {
     private boolean isMuted = false;
+    private boolean isSpeaker = false;
     private HashMap<String, String> handle;
     private Context context;
     private static final String TAG = "RNCK:VoiceConnection";
@@ -71,12 +72,16 @@ public class VoiceConnection extends Connection {
 
     @Override
     public void onCallAudioStateChanged(CallAudioState state) {
-        if (state.isMuted() == this.isMuted) {
-            return;
+        if (state.isMuted() != this.isMuted) {
+            this.isMuted = state.isMuted();
+            sendCallRequestToActivity(isMuted ? ACTION_MUTE_CALL : ACTION_UNMUTE_CALL, handle);
         }
 
-        this.isMuted = state.isMuted();
-        sendCallRequestToActivity(isMuted ? ACTION_MUTE_CALL : ACTION_UNMUTE_CALL, handle);
+        boolean speaker = state.getRoute() == CallAudioState.ROUTE_SPEAKER;
+        if(speaker != this.isSpeaker){
+            this.isSpeaker = speaker;
+            sendCallRequestToActivity(isSpeaker ? ACTION_SET_SPEAKER_CALL : ACTION_UNSET_SPEAKER_CALL, handle);
+        }
     }
 
     @Override

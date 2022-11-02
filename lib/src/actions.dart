@@ -41,13 +41,13 @@ class CallKeepDidDisplayIncomingCall extends EventType {
         localizedCallerName = arguments['localizedCallerName'] as String,
         hasVideo = arguments['hasVideo'] as bool,
         fromPushKit = arguments['fromPushKit'] as bool,
-        payload = arguments['payload'] as Map<dynamic,dynamic>;
+        payload = arguments['payload'] as Map<dynamic, dynamic>;
   String? callUUID;
   String? handle;
   String? localizedCallerName;
   bool? hasVideo;
   bool? fromPushKit;
-  Map<dynamic,dynamic>? payload;
+  Map<dynamic, dynamic>? payload;
 }
 
 class CallKeepDidPerformSetMutedCallAction extends EventType {
@@ -57,6 +57,15 @@ class CallKeepDidPerformSetMutedCallAction extends EventType {
         muted = arguments['muted'] as bool;
   String? callUUID;
   bool? muted;
+}
+
+class CallKeepDidPerformSetSpeakerCallAction extends EventType {
+  CallKeepDidPerformSetSpeakerCallAction();
+  CallKeepDidPerformSetSpeakerCallAction.fromMap(Map<dynamic, dynamic> arguments)
+      : callUUID = arguments['callUUID'] as String,
+        speaker = arguments['speaker'] as bool;
+  String? callUUID;
+  bool? speaker;
 }
 
 class CallKeepDidToggleHoldAction extends EventType {

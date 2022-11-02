@@ -670,6 +670,8 @@ public class CallKeepModule {
             intentFilter.addAction(ACTION_ANSWER_CALL);
             intentFilter.addAction(ACTION_MUTE_CALL);
             intentFilter.addAction(ACTION_UNMUTE_CALL);
+            intentFilter.addAction(ACTION_SET_SPEAKER_CALL);
+            intentFilter.addAction(ACTION_UNSET_SPEAKER_CALL);
             intentFilter.addAction(ACTION_DTMF_TONE);
             intentFilter.addAction(ACTION_UNHOLD_CALL);
             intentFilter.addAction(ACTION_HOLD_CALL);
@@ -760,6 +762,16 @@ public class CallKeepModule {
                     args.putBoolean("muted", false);
                     args.putString("callUUID", attributeMap.get(EXTRA_CALL_UUID));
                     sendEventToFlutter("CallKeepDidPerformSetMutedCallAction", args);
+                    break;
+                case ACTION_SET_SPEAKER_CALL:
+                    args.putBoolean("speaker", true);
+                    args.putString("callUUID", attributeMap.get(EXTRA_CALL_UUID));
+                    sendEventToFlutter("CallKeepDidPerformSetSpeakerCallAction", args);
+                    break;
+                case ACTION_UNSET_SPEAKER_CALL:
+                    args.putBoolean("speaker", false);
+                    args.putString("callUUID", attributeMap.get(EXTRA_CALL_UUID));
+                    sendEventToFlutter("CallKeepDidPerformSetSpeakerCallAction", args);
                     break;
                 case ACTION_DTMF_TONE:
                     args.putString("digits", attributeMap.get("DTMF"));
